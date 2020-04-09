@@ -1,0 +1,8 @@
+{
+  "rate": 0.2,
+  "populationSize": 50,
+  "populationSizeNew": 50,
+  "tournament": 3,
+  "outputFile": "resultOutput.txt",
+  "maxIteration": 100
+}
