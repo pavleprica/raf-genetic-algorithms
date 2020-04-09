@@ -4,6 +4,9 @@ import com.ga.homework_i.model.*
 import java.io.File
 import kotlin.random.Random
 
+/**
+ * This class holds most of the Genetic Algorithm. It will iterate through it.
+ */
 class GeneticAlgorithm {
 
     private val mutation = Mutation()
@@ -12,10 +15,13 @@ class GeneticAlgorithm {
         doGeneticAlgorithm()
     }
 
+    /**
+     * Tournament for chromosomes
+     */
     private fun tournament(population: List<Chromosome>, size: Int): Chromosome {
         val z: MutableList<Chromosome> = mutableListOf()
 
-        while (z.size < ConfigConstants.tournament) {
+        while (z.size < ConfigConstants.tournament!!) {
             z.add(population.random())
         }
 
@@ -33,6 +39,9 @@ class GeneticAlgorithm {
         return best!!
     }
 
+    /**
+     * Crossing of chromosomes. Redcliff
+     */
     private fun cross(chromosomeOne: Chromosome, chromosomeTwo: Chromosome): MutableList<Chromosome> {
         val list: MutableList<Chromosome> = mutableListOf()
 
@@ -47,6 +56,9 @@ class GeneticAlgorithm {
         return list
     }
 
+    /**
+     * Here we init the algorithm
+     */
     private fun doGeneticAlgorithm() {
         val outputFile = File(ConfigConstants.output)
         val output = Output(outputFile)
@@ -55,8 +67,10 @@ class GeneticAlgorithm {
         var bestEverSolution: Chromosome? = null
         var bestEverFunction: Double? = null
 
-
-        for (k in 0..ConfigConstants.maxIteration) {
+        /*
+        Iterations
+         */
+        for (k in 0..ConfigConstants.maxIteration!!) {
             output.println("Run: GA $k")
             var bestChromosome: Chromosome? = null
             var bestFunction: Double? = null
@@ -64,7 +78,10 @@ class GeneticAlgorithm {
             var t = 0
             var population: MutableList<Chromosome> = mutableListOf()
 
-            for(i in 0..ConfigConstants.populationSize) { //population size
+            /*
+            Population generation
+             */
+            for(i in 0..ConfigConstants.populationSize!!) {
                 population.add(Chromosome(
                         Random.nextDouble(
                             ConfigConstants.constraint.leftConstraint,
@@ -77,11 +94,16 @@ class GeneticAlgorithm {
                 ))
             }
 
-
-            while (bestFunction != 3.0 && t < ConfigConstants.maxIteration) { //3.0 is desired result
+            /*
+            Determine of the best function and solution
+             */
+            while (bestFunction != 3.0 && t < ConfigConstants.maxIteration!!) { //3.0 is desired result
                 val n_population = population.toMutableList()
 
-                while(n_population.size < ConfigConstants.populationSize + ConfigConstants.populationSizeNew) {
+                /*
+                New population creation and selection
+                 */
+                while(n_population.size < ConfigConstants.populationSize!! + ConfigConstants.populationSizeNew!!) {
                     var chromosomeOne = tournament(population, 3)
                     var chromosomeTwo = tournament(population, 3)
 
@@ -95,7 +117,7 @@ class GeneticAlgorithm {
                     n_population.add(chromosomeThree)
                     n_population.add(chromosomeFour)
                 }
-                population = n_population.sortedBy { it.expense() }.toMutableList().subList(0, ConfigConstants.populationSize)
+                population = n_population.sortedBy { it.expense() }.toMutableList().subList(0, ConfigConstants.populationSize!!)
 
                 val f = population[0].expense()
 

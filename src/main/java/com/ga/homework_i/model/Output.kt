@@ -1,9 +1,16 @@
 package com.ga.homework_i.model
 
+import com.ga.homework_i.service.GeneticAlgorithm
 import java.io.File
 import java.io.PrintWriter
 
+/**
+ * This file is used to print either to a file or to a console.
+ * If we want to debug, we can change the initialisation of the class in @see GeneticAlgorithm
+ */
+
 class Output(val file: File?) {
+
 
     var printWriter: PrintWriter? = null
 

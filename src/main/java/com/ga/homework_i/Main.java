@@ -22,19 +22,21 @@ public class Main {
         int result = fileChooser.showOpenDialog(frame);
 
         if(result == JFileChooser.APPROVE_OPTION) {
+            try {
             File file = fileChooser.getSelectedFile();
 
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             JSONTokener jsonTokener = new JSONTokener(bufferedReader);
             JSONObject mainObject = new JSONObject(jsonTokener);
 
-            try {
+
                 ConfigConstants.INSTANCE.setRate(mainObject.getDouble("rate"));
                 ConfigConstants.INSTANCE.setPopulationSize(mainObject.getInt("populationSize"));
                 ConfigConstants.INSTANCE.setPopulationSizeNew(mainObject.getInt("populationSizeNew"));
                 ConfigConstants.INSTANCE.setTournament(mainObject.getInt("tournament"));
                 ConfigConstants.INSTANCE.setOutput(mainObject.getString("outputFile"));
                 ConfigConstants.INSTANCE.setMaxIteration(mainObject.getInt("maxIteration"));
+                bufferedReader.close();
             } catch (Exception e) {
                 ConfigConstants.INSTANCE.setRate(0.2);
                 ConfigConstants.INSTANCE.setPopulationSize(50);
@@ -44,11 +46,16 @@ public class Main {
                 ConfigConstants.INSTANCE.setMaxIteration(100);
             }
 
-            bufferedReader.close();
-
-            new GeneticAlgorithm();
+        } else {
+            ConfigConstants.INSTANCE.setRate(0.2);
+            ConfigConstants.INSTANCE.setPopulationSize(50);
+            ConfigConstants.INSTANCE.setPopulationSizeNew(50);
+            ConfigConstants.INSTANCE.setTournament(3);
+            ConfigConstants.INSTANCE.setOutput("resultOutput.txt");
+            ConfigConstants.INSTANCE.setMaxIteration(100);
         }
 
+        new GeneticAlgorithm();
         System.exit(0);
 
 
