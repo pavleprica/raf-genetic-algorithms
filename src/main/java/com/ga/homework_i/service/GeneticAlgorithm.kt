@@ -70,7 +70,7 @@ class GeneticAlgorithm {
         /*
         Iterations
          */
-        for (k in 0..ConfigConstants.maxIteration!!) {
+        for (k in 0..5) {
             output.println("Run: GA $k")
             var bestChromosome: Chromosome? = null
             var bestFunction: Double? = null
