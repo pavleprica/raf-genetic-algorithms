@@ -13,7 +13,7 @@ class Mutation {
 
     fun mutate(chromosome: Chromosome, constraint: Constraint): Chromosome {
 
-        if(Random.nextLong() < ConfigConstants.rate!!) {
+        if(Random.nextDouble(0.0, 1.0) < ConfigConstants.rate!!) {
             chromosome.x = Random.nextDouble(constraint.leftConstraint, constraint.rightConstraint)
             chromosome.y = Random.nextDouble(constraint.leftConstraint, constraint.rightConstraint)
         }
